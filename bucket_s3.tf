@@ -1,30 +1,34 @@
 # Recurso Bucket S3
-resource "aws_s3_bucket" "bucket1" {
-	bucket = "bucket1"  # Nome do bucket S3
+resource "aws_s3_bucket" "bucket" {
+	bucket = "bucket-{var.project_name}-{terraform.workspace}"
+	tags = {
+		Nome = "bucket-{var.project_name}-{terraform.workspace}"
+		Environment = terraform.workspace
+	}
 	website {
-		index_document = "index.html"  # Documento de índice para o bucket S3
+		index_document = "index.html"
     }
 }
 
 # Recurso Objeto do Bucket S3
 resource "aws_s3_bucket_object" "html_file" {
-	bucket		= aws_s3_bucket.bucket1.id  # ID do bucket S3
-	key		= "index.html"  # Chave do objeto no bucket S3
-	source		= "index.html"  # Caminho do arquivo de origem
-	acl		= "public-read"  # Permissões de acesso ao objeto
-	content_type	= "text/html"  # Tipo de conteúdo do objeto
+	bucket = aws_s3_bucket.bucket.id
+	key = "index.html"
+	source = "index.html"
+	acl = "public-read"
+	content_type = "text/html"
 }
 
 # Política do Bucket S3
 resource "aws_s3_bucket_policy" "bucket_policy" {
-	bucket = aws_s3_bucket.bucket1.id  # ID do bucket S3
+	bucket = aws_s3_bucket.bucket.id
 	policy = jsonencode({
-		Version = "2012-10-17"  # Versão da política
+		Version = "2012-10-17"
 		Statement = [{
-			Effect		= "Allow"  # Efeito da política
-			Principal	= "*"  # Principal da política
-			Action		= "s3:GetObject"  # Ação permitida pela política
-			Resource	= "${aws_s3_bucket.bucket1.arn}/*"  # Recurso ao qual a política se aplica
+			Effect = "Allow"
+			Principal = "*"
+			Action = "s3:GetObject"
+			Resource = "${aws_s3_bucket.bucket.arn}/*"
 		}]
 	})
 }
