@@ -1,8 +1,8 @@
 # Recurso Bucket S3
 resource "aws_s3_bucket" "bucket" {
-	bucket = "bucket-{var.project_name}-{terraform.workspace}"
+	bucket = "bucket-${var.project_name}-${terraform.workspace}"
 	tags = {
-		Nome = "bucket-{var.project_name}-{terraform.workspace}"
+		Nome = "bucket-${var.project_name}-${terraform.workspace}"
 		Environment = terraform.workspace
 	}
 	website {
