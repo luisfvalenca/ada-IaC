@@ -1,0 +1,30 @@
+[
+  {
+    "id": "0",
+    "ac_number": 1234,
+    "type": "saque",
+    "value": "100",
+    "uf": "df" 
+  },
+  {
+    "id": "1",
+    "ac_number": 5678,
+    "type": "saque",
+    "value": "50",
+    "uf": "df"
+  },
+  {
+    "id": "2",
+    "ac_number": 1234,
+    "type": "extrato",
+    "value": "0",
+    "uf": "df"
+  },
+  {
+    "id": "3",
+    "ac_number": 1234,
+    "type": "saque",
+    "value": "100",
+    "uf": "sp"
+  }
+]

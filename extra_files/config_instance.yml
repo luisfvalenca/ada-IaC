@@ -1,0 +1,23 @@
+---
+  hosts: all
+  gather_facts: False
+  tasks:
+
+    - name: Garantindo docker instalado
+      apt:
+        name: docker
+        state: latest
+        update_cache: True
+        force_apt_get: True
+    
+    - name: Copiando arquivos da aplicacao para a instancia
+      copy:
+        src: ansible/
+        dest: /opt/app/
+        owner: root
+        group: root
+
+    - name: Subindo os conteiners da aplicacao
+      shell: cd /opt/app/ ; docker compose up --build
+      async: 600
+      poll: 10
