@@ -18,6 +18,7 @@ then
     echo "ERRO! Nao foi possivel encontrar arquivos .tf (terraform)"
     exit 1
 fi
+tfvars_file=$workspace.tfvars
 
 echo "Iniciando entrada de dados..."
 echo "se vazio sera definido valor default!"
@@ -39,10 +40,11 @@ done
 #Le AWS secret key (nao pode ser vazio, parametro -s esconde senha no terminal)
 while [ -z "$aws_secret_key" ]
 do
-    read -s -p 'AWX secret key (obrigatorio): ' awx_secret_key
+    read -s -p 'AWX secret key (obrigatorio): ' aws_secret_key
 done
 
 #Le ID da imagem AMI
+echo
 read -p 'ID da imagem AMI (default: ami-05d2416d3dc5a7165 [debian 12]): ' ami_image
 [ -z "$ami_image" ] && ami_image=ami-05d2416d3dc5a7165
 
@@ -51,8 +53,8 @@ read -p 'Tipo da instancia EC2 (default: t2.micro): ' instance_type
 [ -z "$instance_type" ] && instance_type=t2.micro
 
 #Le nome do ususario do ansible
-read -p 'Nome do usuario Ansible (default: ansibleusr): ' ansibleusr
-[ -z "$ansibleusr" ] && ansibleusr=ansibleusr
+read -p 'Nome do usuario Ansible (default: ansibleusr): ' ansible_user
+[ -z "$ansible_user" ] && ansible_user=ansibleusr
 
 #Cria par de chaves para usuario do ansible
 ssh-keygen -q -t rsa -b 4096 -N '' -f ansible/$ansible_user
@@ -69,7 +71,7 @@ echo "aws_access_key = \"$aws_access_key\"" >> $tfvars_file
 echo "aws_secret_key = \"$aws_secret_key\"" >> $tfvars_file
 echo "ami_image = \"$ami_image\"" >> $tfvars_file
 echo "instance_type = \"$instance_type\"" >> $tfvars_file
-echo "ansibleusr = \"$ansibleusr\"" >> $tfvars_file
+echo "ansible_user = \"$ansible_user\"" >> $tfvars_file
 echo "ansible_pubkey = \"$ansible_pubkey\"" >> $tfvars_file
 
 #Cria workspace no terraform
@@ -79,3 +81,4 @@ terraform workspace list
 
 echo "Arquivo $tfvars_file criado:"
 cat $tfvars_file | sed "/secret_key/d"
+
