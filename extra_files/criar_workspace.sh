@@ -57,11 +57,11 @@ read -p 'Nome do usuario Ansible (default: ansibleusr): ' ansible_user
 [ -z "$ansible_user" ] && ansible_user=ansibleusr
 
 #Cria par de chaves para usuario do ansible
-ssh-keygen -q -t rsa -b 4096 -N '' -f ansible/$ansible_user
-mv ansible/$ansible_user ansible/$ansible_user.pem
+ssh-keygen -q -t rsa -b 4096 -N '' -f extra_files/$ansible_user
+mv extra_files/$ansible_user extra_files/$ansible_user.pem
 
 #Carrega chave publica em variavel para escrever no .tfvars
-ansible_pubkey=$(cat ansible/$ansible_user.pub | cut -d' ' -f-2)
+ansible_pubkey=$(cat extra_files/$ansible_user.pub | cut -d' ' -f-2)
 
 #Escreve dados no arquivo .tfvars
 echo '' > $tfvars_file
