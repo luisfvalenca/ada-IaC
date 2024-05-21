@@ -35,7 +35,7 @@ variable "ami_image" {
   description = "ID da imagem AMI (EC2)"
   type = string
   # AMI Debian 12 (bookworm) para us-east-1
-	default = "ami-05d2416d3dc5a7165"
+  default = "ami-05d2416d3dc5a7165"
 }
 
 variable "instance_type" {
