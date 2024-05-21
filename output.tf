@@ -4,6 +4,6 @@ output "bucket_name" {
 }
 
 output "app_public_ip" {
-    value = 
+    value = aws_instance.app.public_ip
     description = "IP publico da instancia de aplicacao"
 }

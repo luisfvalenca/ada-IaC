@@ -43,3 +43,9 @@ variable "instance_type" {
   type = string
   default = "t2.micro"
 }
+
+variable "ports" {
+  description = "Lista de portas que a aplicacao usa"
+  type = list(number)
+  default = [5672, 6379, 8001, 9000, 9001, 15672]
+}
