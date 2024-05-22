@@ -5,7 +5,10 @@ resource "aws_instance" "app" {
 	depends_on = [aws_s3_bucket.bucket]
 	subnet_id = aws_subnet.ec2_subnet.id
 	associate_public_ip_address = true
-	vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+	dynamic "sg_association"{
+		count=length(var.ports)
+		vpc_security_group_ids = aws_security_group.ec2_sg.id[count.index]
+	}
 	user_data = templatefile("${path.module}/extra_files/config_user.sh", { ansible_user = "${var.ansible_user}", ansible_pubkey = "${var.ansible_pubkey}"})
 	tags = {
 		Name = "app-${var.project_name}-${terraform.workspace}"
