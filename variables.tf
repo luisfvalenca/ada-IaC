@@ -47,5 +47,5 @@ variable "instance_type" {
 variable "ports" {
   description = "Lista de portas que a aplicacao usa"
   type = list(number)
-  default = [5672, 6379, 8001, 9000, 9001, 15672]
+  default = [22, 5672, 6379, 8001, 9000, 9001, 15672]
 }
