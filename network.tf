@@ -42,14 +42,10 @@ resource "aws_route_table" "ec2_route_table" {
 resource "aws_route_table_association" "ec2_route_table_assoc" {
   subnet_id = aws_subnet.ec2_subnet.id
   route_table_id = aws_route_table.ec2_route_table.id
-  tags = {
-    Name = "rt-assoc-${var.project_name}-${terraform.workspace}"
-    Environment = terraform.workspace
-  }
 }
 
 resource "aws_security_group" "ec2_sg" {
-  count = lenght(var.ports)
+  count = length(var.ports)
   name = "sg-${var.project_name}-${terraform.workspace}-${count.index}"
   description = "Allow inbound traffic to port ${count.index}"
   vpc_id = aws_vpc.ec2_vpc.id
