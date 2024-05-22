@@ -9,8 +9,8 @@ resource "aws_vpc" "ec2_vpc" {
 }
 
 resource "aws_subnet" "ec2_subnet" {
-  vpc_id                  = aws_vpc.ec2_vpc.id
-  cidr_block              = "10.0.1.0/24"
+  vpc_id = aws_vpc.ec2_vpc.id
+  cidr_block = "10.0.1.0/24"
   map_public_ip_on_launch = true
   tags = {
     Name = "subnet-${var.project_name}-${terraform.workspace}"
@@ -47,26 +47,29 @@ resource "aws_security_group" "ec2_sg" {
   name = "security-group-${var.project_name}-${terraform.workspace}"
   description = "Allow inbound traffic to app ports"
   vpc_id = aws_vpc.ec2_vpc.id
-
-  dynamic "block_ingress_ports"{
-    count = length(var.ports)
-    ingress {
-      from_port = count.index
-      to_port = count.index
-      protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  }
-
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   tags = {
     Name = "security-group-${var.project_name}-${terraform.workspace}"
     Environment = terraform.workspace
   }
+}
+
+resource "aws_security_group_rule" "allow_ingress_ports" {
+  count = length(var.ports)
+  type = "ingress"
+  description = "Allow inbound traffic to port ${count.index}"
+  from_port = count.index
+  to_port = count.index
+  protocol = "tcp"
+  cidr_blocks = [aws_vpc.ec2_vpc.cidr_block]
+  security_group_id = aws_security_group.ec2_sg.id
+}
+
+resource "aws_security_group_rule" "allow_egress" {
+  type = "egress"  
+  description = "Allow outbound traffic"
+  from_port = 0
+  to_port = 0
+  protocol = "-1"
+  cidr_blocks = [aws_vpc.ec2_vpc.cidr_block]
+  security_group_id = aws_security_group.ec2_sg.id
 }
