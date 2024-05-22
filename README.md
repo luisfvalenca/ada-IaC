@@ -14,7 +14,13 @@ Para o funcionamento de todas as etapas descritas abaixo se faz necessário que 
 
 Assim que fizer o clone do projeto a primeira coisa que o usuário deve fazer é configurar o workspace que ele vai usar, através do script `extra_files/criar_workspace.sh` passando o nome do workspace como parâmetro.
 
+Para isso, antes dê permissão de execução aos scripts bash de `extra_files/`:
+
 exemplo:
+```
+user@hostname:~/ada-Iac$
+chmod +x extra_files/*.sh
+```
 ```
 user@hostname:~/ada-Iac$
 extra_files/criar_workspace.sh prod
