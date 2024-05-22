@@ -66,6 +66,12 @@ exemplo:
 user@hostname:~/ada-Iac$
 extra_files/compose_up.sh 10.123.456.789
 ```
+Caso apareça erro `ansible-playbook: command not found` é porque o pacote `ansible` não está instalado. Para solucionar basta instalar o pacote:
+
+```
+user@hostname:~/ada-Iac$
+sudo apt install ansible -y
+```
 
 Este script foi criado para faciliar a chamada do Playbook do Ansible `extra_files/config_instance.yml` que fará:
 
