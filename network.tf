@@ -56,9 +56,9 @@ resource "aws_security_group" "ec2_sg" {
 resource "aws_security_group_rule" "allow_ingress_ports" {
   count = length(var.ports)
   type = "ingress"
-  description = "Allow inbound traffic to port ${count.index}"
-  from_port = count.index
-  to_port = count.index
+  description = "Allow inbound traffic to port ${var.ports[count.index]}"
+  from_port = var.ports[count.index]
+  to_port = var.ports[count.index]
   protocol = "tcp"
   cidr_blocks = [aws_vpc.ec2_vpc.cidr_block]
   security_group_id = aws_security_group.ec2_sg.id
