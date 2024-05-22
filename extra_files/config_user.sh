@@ -2,7 +2,7 @@
 
 # Garante pacotes necessarios ao ansible instalados na instancia
 sudo apt update
-sudo apt install ansible python3 openssh-server -y
+sudo apt install python3 openssh-server -y
 
 # Cria e configura o usuario do ansible
 echo "Criando user: $ansible_user ..."

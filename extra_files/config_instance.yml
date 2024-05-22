@@ -10,6 +10,11 @@
         update_cache: True
         force_apt_get: True
     
+    - name: Garantindo docker deamon em execucao
+      service:
+        name: docker
+        state: started
+
     - name: Copiando arquivos da aplicacao para a instancia
       copy:
         src: ansible/

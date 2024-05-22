@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Validan entrada de dados
+#Valida entrada de dados
 if [ $# -ne 1 ]
 then
     echo 'ERRO! Informe o workspace como parametro...'
