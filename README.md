@@ -22,7 +22,7 @@ extra_files/criar_workspace.sh prod
 
 Neste momento o script fará nesta ordem:
 
-- Entrada de dados (nome do projeto; região AWS; ID AWS access key; AWX secret key; ID da imagem AMI; tipo da instância EC2; nome de usuário para o Ansible) - valores default são definidos caso o usuário deixa campo em branco.
+- Entrada de dados (nome do projeto; região AWS; ID AWS access key; AWX secret key; ID da imagem AMI; tipo da instância EC2; nome de usuário para o Ansible) - valores default são definidos caso o usuário deixe campo em branco.
 - Cria um par de chaves SSH para o usuário do Ansible.
 - Cria um arquivo .tfvars para o nome de workspace definido, e escreve nele as variáveis definidas acima.
 - Faz o `terraform init` e cria o workspace no Terraform.
