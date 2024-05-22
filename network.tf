@@ -44,16 +44,18 @@ resource "aws_route_table_association" "ec2_route_table_assoc" {
 }
 
 resource "aws_security_group" "ec2_sg" {
-  count = length(var.ports)
-  name = "security-group-${var.project_name}-${terraform.workspace}-${count.index}"
-  description = "Allow inbound traffic to port ${count.index}"
+  name = "security-group-${var.project_name}-${terraform.workspace}"
+  description = "Allow inbound traffic to app ports"
   vpc_id = aws_vpc.ec2_vpc.id
 
-  ingress {
-    from_port = count.index
-    to_port = count.index
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  dynamic "block_ingress_ports"{
+    count = length(var.ports)
+    ingress {
+      from_port = count.index
+      to_port = count.index
+      protocol = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
 
   egress {
@@ -64,7 +66,7 @@ resource "aws_security_group" "ec2_sg" {
   }
 
   tags = {
-    Name = "sg-${var.project_name}-${terraform.workspace}-${count.index}"
+    Name = "security-group-${var.project_name}-${terraform.workspace}"
     Environment = terraform.workspace
   }
 }
