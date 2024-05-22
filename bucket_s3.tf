@@ -16,7 +16,7 @@ resource "aws_s3_bucket_website_configuration" "website" {
 }
 
 # Recurso Objeto do Bucket S3
-resource "aws_s3_bucket_object" "html_file" {
+resource "aws_s3_object" "html_file" {
 	bucket = aws_s3_bucket.bucket.id
 	key = "index.html"
 	source = "extra_files/index.html"

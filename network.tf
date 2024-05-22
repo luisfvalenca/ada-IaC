@@ -46,7 +46,7 @@ resource "aws_route_table_association" "ec2_route_table_assoc" {
 
 resource "aws_security_group" "ec2_sg" {
   count = length(var.ports)
-  name = "sg-${var.project_name}-${terraform.workspace}-${count.index}"
+  name = "security-group-${var.project_name}-${terraform.workspace}-${count.index}"
   description = "Allow inbound traffic to port ${count.index}"
   vpc_id = aws_vpc.ec2_vpc.id
 
