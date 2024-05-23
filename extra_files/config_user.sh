@@ -16,7 +16,7 @@ sudo useradd \
     --shell /bin/bash \
     $USER
 # Desabilita senha
-echo "${USER}:senha" | chpasswd
+echo "$USER:senha" | chpasswd
 #sudo passwd -q -d $USER
 #sudo passwd -q -l $USER
 # Escreve chave publica
