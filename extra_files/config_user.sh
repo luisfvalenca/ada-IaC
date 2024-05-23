@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Captura variaveis passadas pelo Terraform
-USER=${tf_ansible_user}
-PUBKEY=${tf_ansible_pubkey}
+USER="${tf_ansible_user}"
+PUBKEY="${tf_ansible_pubkey}"
 
 # Garante pacotes necessarios ao ansible instalados na instancia
 sudo apt update
@@ -16,9 +16,8 @@ sudo useradd \
     --shell /bin/bash \
     $USER
 # Desabilita senha
-echo "$USER:senha" | chpasswd
-#sudo passwd -q -d $USER
-#sudo passwd -q -l $USER
+sudo passwd -q -d $USER
+sudo passwd -q -l $USER
 # Escreve chave publica
 sudo mkdir -p /home/$USER/.ssh
 sudo echo "$PUBKEY" > /home/$USER/.ssh/authorized_keys
