@@ -11,6 +11,7 @@ resource "aws_vpc" "ec2_vpc" {
 resource "aws_subnet" "ec2_subnet" {
   vpc_id = aws_vpc.ec2_vpc.id
   cidr_block = "10.0.1.0/24"
+  availability_zone = "us-east-1a"
   map_public_ip_on_launch = true
   tags = {
     Name = "subnet-${var.project_name}-${terraform.workspace}"
@@ -60,7 +61,7 @@ resource "aws_security_group_rule" "allow_ingress_ports" {
   from_port = var.ports[count.index]
   to_port = var.ports[count.index]
   protocol = "tcp"
-  cidr_blocks = [aws_vpc.ec2_vpc.cidr_block]
+  cidr_blocks = ["0.0.0.0/0"]
   security_group_id = aws_security_group.ec2_sg.id
 }
 
@@ -70,6 +71,6 @@ resource "aws_security_group_rule" "allow_egress" {
   from_port = 0
   to_port = 0
   protocol = "-1"
-  cidr_blocks = [aws_vpc.ec2_vpc.cidr_block]
+  cidr_blocks = ["0.0.0.0/0"]
   security_group_id = aws_security_group.ec2_sg.id
 }
