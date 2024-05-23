@@ -33,7 +33,9 @@ Neste momento o script fará nesta ordem:
 - Cria um arquivo .tfvars para o nome de workspace definido, e escreve nele as variáveis definidas acima.
 - Faz o `terraform init` e cria o workspace no Terraform.
 
-Obs.: Tanto o arquivo .tfvars quanto o par de chaves SSH criados estão no .gitignore pois possuem dados sensíveis.
+Obs.1: Para este projeto funcionar perfeitamente, recomanda-se usar uma imagem AMI Debian ou Ubuntu.
+
+Obs.2: Tanto o arquivo .tfvars quanto o par de chaves SSH criados estão no .gitignore pois possuem dados sensíveis.
 
 ## Provisionando na AWS
 
@@ -78,6 +80,17 @@ Este script foi criado para faciliar a chamada do Playbook do Ansible `extra_fil
 - Instalação do docker na instância e garantia do deamon do docker em execução.
 - A copia da aplicação que está em `ansible/` para a instância dentro do diretório `/opt/app/`.
 - Execução do comando `docker compose up --build` para subida da aplicação.
+
+Para acessar as consoles WEB o usuário pode usar o IP Público disponibilizado ou consultar o "DNS IPV4" na console da AWS, e acessar as portas da aplicação:
+
+exemplo:
+
+```
+http://ec2-54-159-136-200.compute-1.amazonaws.com:9001 -> MiniO
+http://ec2-54-159-136-200.compute-1.amazonaws.com:8001 -> redis
+http://ec2-54-159-136-200.compute-1.amazonaws.com:15672 -> rabbitMQ
+```
+\* "54-159-136-200" no exemplo acima era o IP público existente, substitua pelo seu!
 
 Obs.: Demais detalhes do funcionamento da aplicação podem ser obtidos através da consulta ao seu projeto em: https://github.com/luisfvalenca/ada-container
 
