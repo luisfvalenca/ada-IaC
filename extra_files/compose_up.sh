@@ -18,8 +18,8 @@ ansible-playbook \
     --user ${USER} \
     --private-key ${PEMKEY} \
     --become \
-    -v \
-    extra_files/config_instance.yml
+    -vv \
+    extra_files/config_instance.yml &
 
 # --become: elevacao de usuario (sudo)
 # -v: nivel de verbose 1

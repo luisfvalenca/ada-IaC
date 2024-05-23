@@ -3,9 +3,25 @@
   gather_facts: False
   tasks:
 
+    - name: Salvando chave GPG do docker repo
+      shell:
+        cmd: 'apt-get update; apt-get install ca-certificates curl -y ; install -m 0755 -d /etc/apt/keyrings ; curl -fsSL https://download.docker.com/linux/$(egrep -oi "(ubuntu|debian)" /etc/issue | tr [A-Z] [a-z])/gpg -o /etc/apt/keyrings/docker.asc ; chmod a+r /etc/apt/keyrings/docker.asc'
+        executable: /bin/bash
+
+    - name: Garantindo docker repo
+      shell:
+        cmd: 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/$(egrep -oi "(ubuntu|debian)" /etc/issue | tr [A-Z] [a-z]) $(source /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list ; apt-get update'
+        executable: /bin/bash
+
     - name: Garantindo docker instalado
       apt:
-        name: docker
+        name:
+          - docker
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
         state: latest
         update_cache: True
         force_apt_get: True
@@ -17,7 +33,7 @@
 
     - name: Copiando arquivos da aplicacao para a instancia
       copy:
-        src: ansible/
+        src: ../ansible/
         dest: /opt/app/
         owner: root
         group: root
